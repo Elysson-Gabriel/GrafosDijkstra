@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 /*
 #1º Exercício-programa de Grafos#
@@ -21,9 +22,9 @@ char nome_do_arquivo[300];
 FILE *arquivo;
 
 // Algoritmo de Dijkstra
-void dijkstra()
+void dijkstra(int matriz_grafo)
 {
-
+    
 }
 
 // Caminho mínimo do vértice 1 para o vértice 4: (1, 2) (2, 5) (5, 4)
@@ -42,11 +43,23 @@ int main()
         vertice_destino_i = malloc(sizeof(int) * quantidade_de_arcos);
         custo_i = malloc(sizeof(int) * quantidade_de_arcos);
 
+        // Matriz de adjacência do grafo
+        int matriz_grafo[quantidade_de_vertices][quantidade_de_vertices];
+
+        // Poupulando a matriz de adjacência do grafo
+        for (int i = 0; i < quantidade_de_vertices; i++)
+            for (int j = 0; j < quantidade_de_vertices; j++)
+                matriz_grafo[i][j] = -1;
+
         while ((fscanf(arquivo, "%d %d %d\n", &vertice_origem_i[i], &vertice_destino_i[i], &custo_i[i])) != EOF)
         {
             printf("%d %d %d\n", vertice_origem_i[i], vertice_destino_i[i], custo_i[i]);
+            matriz_grafo[vertice_origem_i[i]][vertice_destino_i[i]] = custo_i[i];
             i++;
         }
+
+        //Chamada do algoritmo
+        dijkstra(matriz_grafo);
     }
     else
     {
