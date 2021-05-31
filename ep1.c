@@ -1,46 +1,55 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /*
-
-#1∫ ExercÌcio-programa de Grafos#
+#1¬∫ Exerc√≠cio-programa de Grafos#
 
 #Prof. Glauber Cintra#
 
 Integrantes do grupo:
-- Elysson Gabriel Soares Simıes
-- Jo„o Marcus Maia Rocha
-- Nivardo Albuquerque Leit„o de Castro
+- Elysson Gabriel Soares Sim√µes
+- Jo√£o Marcus Maia Rocha
+- Nivardo Albuquerque Leit√£o de Castro
 - Paulo Ricardo Bernardo Silva
-
 */
 
-int n, m, s, t;
-int *u, *v, *c;
+int quantidade_de_vertices, quantidade_de_arcos, vertice_origem, vertice_destino;
+int *vertice_origem_i, *vertice_destino_i, *custo_i;
 int i = 0;
 char nome_do_arquivo[300];
 FILE *arquivo;
 
+// Algoritmo de Dijkstra
+void dijkstra()
+{
+
+}
+
+// Caminho m√≠nimo do v√©rtice 1 para o v√©rtice 4: (1, 2) (2, 5) (5, 4)
+// Custo: 13
 int main()
 {
     strcpy(nome_do_arquivo, "digrafo.txt");
     arquivo = fopen(nome_do_arquivo, "r");
 
-    if(arquivo != NULL){
+    if (arquivo != NULL)
+    {
+        fscanf(arquivo, "%d %d %d %d\n", &quantidade_de_vertices, &quantidade_de_arcos, &vertice_origem, &vertice_destino);
+        printf("%d %d %d %d\n", quantidade_de_vertices, quantidade_de_arcos, vertice_origem, vertice_destino);
 
-        fscanf(arquivo,"%d %d %d %d\n", &n, &m, &s, &t);
-        printf("%d %d %d %d\n", n, m, s, t);
+        vertice_origem_i = malloc(sizeof(int) * quantidade_de_arcos);
+        vertice_destino_i = malloc(sizeof(int) * quantidade_de_arcos);
+        custo_i = malloc(sizeof(int) * quantidade_de_arcos);
 
-        u = malloc(sizeof(int) * m);
-        v = malloc(sizeof(int) * m);
-        c = malloc(sizeof(int) * m);
-
-        while((fscanf(arquivo,"%d %d %d\n", &u[i], &v[i], &c[i])) != EOF){
-            printf("%d %d %d\n", u[i], v[i], c[i]);
+        while ((fscanf(arquivo, "%d %d %d\n", &vertice_origem_i[i], &vertice_destino_i[i], &custo_i[i])) != EOF)
+        {
+            printf("%d %d %d\n", vertice_origem_i[i], vertice_destino_i[i], custo_i[i]);
             i++;
         }
-
-    }else{
+    }
+    else
+    {
         printf("Erro na leitura do arquivo!\n");
     }
 
