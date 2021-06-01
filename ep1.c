@@ -1,23 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
 /*
 
-#1� Exerc�cio-programa de Grafos#
+#1º Exercício-programa de Grafos#
 
 #Prof. Glauber Cintra#
 
 Integrantes do grupo:
-- Elysson Gabriel Soares Sim�es
-- Jo�o Marcus Maia Rocha
-- Nivardo Albuquerque Leit�o de Castro
+- Elysson Gabriel Soares Simões
+- João Marcus Maia Rocha
+- Nivardo Albuquerque Leitão de Castro
 - Paulo Ricardo Bernardo Silva
 
 */
 
 int numeroVertices, numeroArestas, origem, destino;
-int **matrizAdjacenciaDirecialComCustos;
+int **matrizAdjacenciaDirecionalComCustos;
 int *verticesOrigem, *verticesDestino, *custosArestas;
 int i = 0;
 char nome_do_arquivo[300];
@@ -29,10 +30,10 @@ void mostraResultado(
     int origemDoVertice[numeroVertices])
 {
     if (min == HUGE_VAL)
-        printf("\nNão existe caminho entre os vértices %d e %d\n", origem, destino);
+        printf("\nInexiste um caminho entre os vertices %d e %d\n", origem, destino);
     else
     {
-        printf("\nO caminho de custo mínimo entre os vértices %d e %d é:\n",
+        printf("Caminho minimo do vertice %d para o vertice %d:",
                origem, destino);
         i = destino;
         int buffer[numeroVertices];
@@ -45,16 +46,13 @@ void mostraResultado(
             i = origemDoVertice[i];
         }
 
-        for (i = index - 1; i >= 0; i--)
+        for (i = index - 1; i > 0; i--)
         {
-            if (i)
-                printf("%d --\'%d\'--> ", buffer[i], matrizAdjacenciaDirecialComCustos[buffer[i] - 1][buffer[i - 1] - 1]);
-            else
-                printf("%d", buffer[i]);
+            printf(" (%d,  %d)", buffer[i], buffer[i-1]);
         }
-        printf("\nO custo deste caminho é: %d\n", (int)custoAteVertice[destino - 1]);
+        printf("\nCusto: %d", (int)custoAteVertice[destino - 1]);
     }
-}
+} /* fim mostraResultado */
 
 void dijkstra()
 {
@@ -64,10 +62,10 @@ void dijkstra()
     // Inicializa o vetor de custoAteVertice e o vetor de origemDoVertice
     for (i = 0; i < numeroVertices; i++)
     {
-        if (matrizAdjacenciaDirecialComCustos[origem - 1][i] != -1)
+        if (matrizAdjacenciaDirecionalComCustos[origem - 1][i] != -1)
         {
             origemDoVertice[i] = origem - 1;
-            custoAteVertice[i] = matrizAdjacenciaDirecialComCustos[origem - 1][i];
+            custoAteVertice[i] = matrizAdjacenciaDirecionalComCustos[origem - 1][i];
         }
         else
         {
@@ -97,10 +95,10 @@ void dijkstra()
                 if (!visitados[i])
                 {
                     if (
-                        matrizAdjacenciaDirecialComCustos[verticeAuxiliar][i] != -1 &&
-                        (custoAteVertice[verticeAuxiliar] + matrizAdjacenciaDirecialComCustos[verticeAuxiliar][i]) < custoAteVertice[i])
+                        matrizAdjacenciaDirecionalComCustos[verticeAuxiliar][i] != -1 &&
+                        (custoAteVertice[verticeAuxiliar] + matrizAdjacenciaDirecionalComCustos[verticeAuxiliar][i]) < custoAteVertice[i])
                     {
-                        custoAteVertice[i] = custoAteVertice[verticeAuxiliar] + matrizAdjacenciaDirecialComCustos[verticeAuxiliar][i];
+                        custoAteVertice[i] = custoAteVertice[verticeAuxiliar] + matrizAdjacenciaDirecionalComCustos[verticeAuxiliar][i];
                         origemDoVertice[i] = verticeAuxiliar;
                     }
                 }
@@ -108,46 +106,43 @@ void dijkstra()
     }
 
     mostraResultado(valorMinimo, custoAteVertice, origemDoVertice);
-}
+} /* fim Dijkstra */
 
 void inicializaVetoresAuxiliares()
 {
     verticesOrigem = malloc(sizeof(int) * numeroArestas);
     verticesDestino = malloc(sizeof(int) * numeroArestas);
     custosArestas = malloc(sizeof(int) * numeroArestas);
-}
+} /* fim inicializaVetoresAuxiliares */
 
 void leCabecalhoDoArquivo()
 {
-    printf("Valores lidos no arquivo:\n");
     fscanf(arquivo, "%d %d %d %d\n", &numeroVertices, &numeroArestas, &origem, &destino);
-    printf("%d %d %d %d\n", numeroVertices, numeroArestas, origem, destino);
-}
+} /* fim leCabecalhoDoArquivo */
 
 void criaMatrizAdjacenciaDirecionalComCusto()
 {
-    matrizAdjacenciaDirecialComCustos = (int **)malloc(sizeof(int *) * numeroVertices);
+    matrizAdjacenciaDirecionalComCustos = (int **)malloc(sizeof(int *) * numeroVertices);
     for (i = 0; i < numeroVertices; i++)
     {
-        matrizAdjacenciaDirecialComCustos[i] = malloc(sizeof(int) * numeroVertices);
+        matrizAdjacenciaDirecionalComCustos[i] = malloc(sizeof(int) * numeroVertices);
     }
     for (i = 0; i < numeroVertices; i++)
     {
         for (int j = 0; j < numeroVertices; j++)
         {
-            matrizAdjacenciaDirecialComCustos[i][j] = -1;
+            matrizAdjacenciaDirecionalComCustos[i][j] = -1;
         }
     }
-}
+} /* fim criaMatrizAdjacenciaDirecionalComCusto */
 
 void leCadaArestaDoArquivo()
 {
     while ((fscanf(arquivo, "%d %d %d\n", &verticesOrigem[i], &verticesDestino[i], &custosArestas[i])) != EOF)
     {
-        printf("%d %d %d\n", verticesOrigem[i], verticesDestino[i], custosArestas[i]);
-        matrizAdjacenciaDirecialComCustos[verticesOrigem[i] - 1][verticesDestino[i] - 1] = custosArestas[i];
+        matrizAdjacenciaDirecionalComCustos[verticesOrigem[i] - 1][verticesDestino[i] - 1] = custosArestas[i];
     }
-}
+} /* fim leCadaArestaDoArquivo */
 
 void leArquivo(char *argv[])
 {
@@ -162,12 +157,13 @@ void leArquivo(char *argv[])
         leCadaArestaDoArquivo();
     }
     else
-    {
+    { /* Mostra mensagem para o usuário caso ocorra algum
+        problema durante a leitura do arquivo */
         printf("Erro na leitura do arquivo!\n");
     }
     fclose(arquivo);
     return;
-}
+} /* fim leArquivo */
 
 int main(int argc, char *argv[])
 {
@@ -178,8 +174,9 @@ int main(int argc, char *argv[])
         return 0;
     }
     else
-    {
-        printf("Você precisa digitar o nome do arquivo ao executar!\n");
+    { /* Mostra mensagem para o usuário se o programa por executado
+        sem o arquivo contendo o digrafo */
+        printf("Digite o nome do arquivo ao executar!\n");
         return 1;
     }
-}
+} /* fim main */
