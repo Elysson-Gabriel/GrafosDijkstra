@@ -17,12 +17,23 @@ Integrantes do grupo:
 
 */
 
+// Globais
 int numeroVertices, numeroArestas, origem, destino;
 int **matrizAdjacenciaDirecionalComCustos;
 int *verticesOrigem, *verticesDestino, *custosArestas;
 int i = 0;
 char nome_do_arquivo[300];
 FILE *arquivo;
+
+// Protótipos
+void mostraResultado(double min,double custoAteVertice[numeroVertices],int origemDoVertice[numeroVertices]);
+void dijkstra();
+void inicializaVetoresAuxiliares();
+void leCabecalhoDoArquivo();
+void criaMatrizAdjacenciaDirecionalComCusto();
+void leCadaArestaDoArquivo();
+int main(int argc, char *argv[]);
+
 
 void mostraResultado(
     double min,
