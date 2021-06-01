@@ -32,6 +32,7 @@ void inicializaVetoresAuxiliares();
 void leCabecalhoDoArquivo();
 void criaMatrizAdjacenciaDirecionalComCusto();
 void leCadaArestaDoArquivo();
+void desalocarMatriz();
 int main(int argc, char *argv[]);
 
 
@@ -176,12 +177,22 @@ void leArquivo(char *argv[])
     return;
 } /* fim leArquivo */
 
+
+void desalocarMatriz(){
+	for (i = 0; i < numeroVertices; i++)
+	{
+		free(matrizAdjacenciaDirecionalComCustos[i]);
+	}
+
+}/* fim desalocarMatriz */
+
 int main(int argc, char *argv[])
 {
     if (argc >= 2)
     {
         leArquivo(argv);
         dijkstra();
+        desalocarMatriz();
         return 0;
     }
     else
