@@ -156,25 +156,27 @@ void leCadaArestaDoArquivo()
     }
 } /* fim leCadaArestaDoArquivo */
 
-void leArquivo(char *argv[])
+int leArquivo(char *argv[])
 {
     strcpy(nome_do_arquivo, argv[1]);
     arquivo = fopen(nome_do_arquivo, "r");
+	int arquivoEncontrado = arquivo != NULL;
 
-    if (arquivo != NULL)
+    if (arquivoEncontrado)
     {
         leCabecalhoDoArquivo();
         inicializaVetoresAuxiliares();
         criaMatrizAdjacenciaDirecionalComCusto();
         leCadaArestaDoArquivo();
+		fclose(arquivo);
     }
     else
     { /* Mostra mensagem para o usuário caso ocorra algum
         problema durante a leitura do arquivo */
         printf("Erro na leitura do arquivo!\n");
     }
-    fclose(arquivo);
-    return;
+
+    return arquivoEncontrado;
 } /* fim leArquivo */
 
 
@@ -191,7 +193,9 @@ int main(int argc, char *argv[])
 {
     if (argc >= 2)
     {
-        leArquivo(argv);
+        if(!leArquivo(argv)){
+        	return 0;
+        };
         dijkstra();
         desalocarMatriz();
         return 0;
