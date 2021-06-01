@@ -183,6 +183,7 @@ void desalocarMatriz(){
 	{
 		free(matrizAdjacenciaDirecionalComCustos[i]);
 	}
+	free(matrizAdjacenciaDirecionalComCustos);
 
 }/* fim desalocarMatriz */
 
