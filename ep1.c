@@ -45,7 +45,7 @@ void mostraResultado(
         printf("\nInexiste um caminho entre os vertices %d e %d\n", origem, destino);
     else
     {
-        printf("Caminho minimo do vertice %d para o vertice %d:",
+        printf("\nCaminho minimo do vertice %d para o vertice %d:",
                origem, destino);
         i = destino;
         int buffer[numeroVertices];
@@ -60,7 +60,7 @@ void mostraResultado(
 
         for (i = index - 1; i > 0; i--)
         {
-            printf(" (%d,  %d)", buffer[i], buffer[i-1]);
+            printf(" (%d, %d)", buffer[i], buffer[i-1]);
         }
         printf("\nCusto: %d\n", (int)custoAteVertice[destino - 1]);
     }
