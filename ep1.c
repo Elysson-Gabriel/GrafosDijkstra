@@ -50,7 +50,7 @@ void mostraResultado(
         {
             printf(" (%d,  %d)", buffer[i], buffer[i-1]);
         }
-        printf("\nCusto: %d", (int)custoAteVertice[destino - 1]);
+        printf("\nCusto: %d\n", (int)custoAteVertice[destino - 1]);
     }
 } /* fim mostraResultado */
 
